@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # Variables definition
 np = 256
-x1 = 10
+x1 = 10.0
 x0 = 0
 dx = 2*x1/np
 D = .01
@@ -23,19 +23,27 @@ v = 0.0
 #Note that the Critical Value is derived from the SchistosomiasisF.m in Matlab
 
 c = h*f
-nsteps = 10
+nsteps = 1
 
 #Discretization of initial distribution
 x = []
 for i in range(0,np-1):
     newrange = -x1 + i*dx
     x.append(newrange)
+x = array(x)
 
 I0 = array([0] * 255)
 
-H0 = array([abs(i) for i in x])
-print(H0)
-# H0
+H0 = []
+H0_element = array([abs(i) for i in x])
+for i in H0_element:
+    if i <=.25:
+        H0_i = 20 * 1
+        H0.append(H0_i)
+    else:
+        H0.append(0)
+H0 = array(H0)
+
 K = []
 
 for i in x:
@@ -57,11 +65,11 @@ for j in range(0, nsteps):
     I = (1-delta)*I0+b*((s-I0)*H0**2)/(1+H0)
 
     plt.plot(x,H,'ro')
-    plt.axis([0,10,0,100])
-    plt.show()
-    plt.xlabel('distance')
-    plt.ylabel('Probability')
+    plt.axis([x0,x1,-1,30])
+    plt.xlabel('Distance')
+    plt.ylabel('Worms (per host)')
     plt.title('Schistosomiasis: diffusion + advection')
+    plt.show()
 
     I0_new = I
     H0 = H
