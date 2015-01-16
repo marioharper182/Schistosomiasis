@@ -21,9 +21,10 @@ s = 10
 v = 0.0
 
 #Note that the Critical Value is derived from the SchistosomiasisF.m in Matlab
+Hcrit = 4.1368
 
 c = h*f
-nsteps = 1
+nsteps = 2
 
 #Discretization of initial distribution
 x = []
