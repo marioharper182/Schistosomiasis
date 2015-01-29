@@ -24,7 +24,7 @@ v = 0.0
 Hcrit = 4.1368
 
 c = h*f
-nsteps = 2
+nsteps = 1
 
 #Discretization of initial distribution
 x = []
@@ -64,6 +64,12 @@ for j in range(0, nsteps):
 
     H = (1-mu)*H0+c*I0
     I = (1-delta)*I0+b*((s-I0)*H0**2)/(1+H0)
+
+    critvalue = []
+    for i in x:
+        if H[i] >= Hcrit:
+            critvalue.append((i,j))
+
 
     plt.plot(x,H,'ro')
     plt.axis([x0,x1,-1,30])
