@@ -24,7 +24,8 @@ v = 0.0
 Hcrit = 4.1368
 
 c = h*f
-nsteps = 1
+nsteps = 2000
+keyplot = [0, nsteps/2, nsteps-1]
 
 #Discretization of initial distribution
 x = []
@@ -57,6 +58,13 @@ fK = array(fft(K_new).T*dx)
 
 #Graphing function starts here
 
+critvalue = []
+critvalueX = []
+critvalueH = []
+CritX = array(critvalueX)
+CritH = array(critvalueH)
+
+
 for j in range(0, nsteps):
 
     fI0 = array(fft(I0))
@@ -65,26 +73,32 @@ for j in range(0, nsteps):
     H = (1-mu)*H0+c*I0
     I = (1-delta)*I0+b*((s-I0)*H0**2)/(1+H0)
 
-    critvalue = []
-    for i in x:
+    for i in range(128, len(x)):
         if H[i] >= Hcrit:
             critvalue.append((i,j))
+            critvalueH.append(j)
+            critvalueX.append(i)
 
+    if j in keyplot:
+        plt.plot(x,H,'ro', linestyle = '-')
+        plt.axis([x0,x1,-1,30])
+        plt.xlabel('Distance')
+        plt.ylabel('Worms (per host)')
+        plt.title('Schistosomiasis: diffusion + advection')
+        plt.show()
 
-    plt.plot(x,H,'ro')
-    plt.axis([x0,x1,-1,30])
-    plt.xlabel('Distance')
-    plt.ylabel('Worms (per host)')
-    plt.title('Schistosomiasis: diffusion + advection')
-    plt.show()
-
-    I0_new = I
+    I0 = I
     H0 = H
 
+# print(critvalue)
+# print(critvalueX)
+# print(critvalueH)
 
-    pass
+Instantlistx = []
+InstantlistH = []
+for i in range(len(critvalueH)):
+    if critvalueX[i] not in Instantlistx:
+        Instantlistx.append(critvalueX[i])
+        InstantlistH.append(critvalueH[i])
 
-    # for i in range(len(fK)):
-
-    # Get video file later TODO:
-    # http://www.sciencemag.org/site/feature/data/990551.mov
+print((Instantlistx,InstantlistH))
