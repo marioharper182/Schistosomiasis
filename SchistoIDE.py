@@ -24,7 +24,7 @@ v = 0.0
 Hcrit = 4.1368
 
 c = h*f
-nsteps = 2000
+nsteps = 20000
 keyplot = [0, nsteps/2, nsteps-1]
 
 #Discretization of initial distribution
@@ -98,7 +98,7 @@ Instantlistx = []
 InstantlistH = []
 for i in range(len(critvalueH)):
     if critvalueX[i] not in Instantlistx:
-        Instantlistx.append(critvalueX[i])
+        Instantlistx.append(critvalueX[i]-128)
         InstantlistH.append(critvalueH[i])
 
 print((Instantlistx,InstantlistH))
