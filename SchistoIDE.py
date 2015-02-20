@@ -39,9 +39,6 @@ critvalueX = []
 critvalueH = []
 CritX = array(critvalueX)
 CritH = array(critvalueH)
-x = []
-H0 = []
-K = []
 
 
 for delta in [0.01, .05, .1]:
@@ -52,6 +49,7 @@ for delta in [0.01, .05, .1]:
     if delta == .1:
         Hcrit = Hcritlist[2]
     #Discretization of initial distribution
+    x = []
     for i in range(0,np-1):
         newrange = -x1 + i*dx
         x.append(newrange)
@@ -59,6 +57,7 @@ for delta in [0.01, .05, .1]:
 
     I0 = array([0] * 255)
 
+    H0 = []
     H0_element = array([abs(i) for i in x])
     for i in H0_element:
         if i <=.25:
@@ -68,6 +67,7 @@ for delta in [0.01, .05, .1]:
             H0.append(0)
     H0 = array(H0)
 
+    K = []
     for i in x:
         equation = math.exp(-1*(i-v)**2/(4*D))/math.sqrt(4*math.pi*D)
         K.append(equation)
