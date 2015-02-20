@@ -1,10 +1,12 @@
 __author__ = 'mario'
 
 from numpy.fft import fft, ifft, fftshift
-from numpy import array
+from numpy import array, arange, meshgrid
+import numpy
 from scipy.stats import linregress
 import math
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 # Variables definition
 np = 256
@@ -37,6 +39,9 @@ critvalueX = []
 critvalueH = []
 CritX = array(critvalueX)
 CritH = array(critvalueH)
+x = []
+H0 = []
+K = []
 
 
 for delta in [0.01, .05, .1]:
@@ -47,7 +52,6 @@ for delta in [0.01, .05, .1]:
     if delta == .1:
         Hcrit = Hcritlist[2]
     #Discretization of initial distribution
-    x = []
     for i in range(0,np-1):
         newrange = -x1 + i*dx
         x.append(newrange)
@@ -55,7 +59,6 @@ for delta in [0.01, .05, .1]:
 
     I0 = array([0] * 255)
 
-    H0 = []
     H0_element = array([abs(i) for i in x])
     for i in H0_element:
         if i <=.25:
@@ -65,7 +68,6 @@ for delta in [0.01, .05, .1]:
             H0.append(0)
     H0 = array(H0)
 
-    K = []
     for i in x:
         equation = math.exp(-1*(i-v)**2/(4*D))/math.sqrt(4*math.pi*D)
         K.append(equation)
@@ -125,3 +127,8 @@ for delta in [0.01, .05, .1]:
 
     Regressionstats = linregress(RegressX,RegressY)
     print(Regressionstats)
+
+def ThreeDPlot():
+    x = y = arange(-3.0, 3.0, delta)
+    X, Y = meshgrid(x, y)
+    pass
